@@ -34,7 +34,7 @@ function selectCell(cellElement){
             }
         }
         postMsg="data[Lesson][day]="+day+"&data[Lesson][start_time][hour]="+hour+"&data[Lesson][start_time][min]=00&data[Lesson][end_time][hour]="+(1*hour+1)+"&data[Lesson][end_time][min]=00&data[Lesson][quota]=14";
-        url = "/cakephp/Lessons/add";
+        url = "/Lessons/add";
     } else{
         callback = function(xmlhttpObj){
             return function(){
@@ -44,7 +44,7 @@ function selectCell(cellElement){
             }
         }
         postMsg="";
-        url = "/cakephp/Lessons/delete/"+cellElement.getAttribute('idsesion');
+        url = "/Lessons/delete/"+cellElement.getAttribute('idsesion');
     }
 
     loadXMLDoc(url, callback, postMsg);
