@@ -1,5 +1,5 @@
 <h2>Asistencia de tutores</h2>
-<a href="AttendanceTutors/add" class="btnAdd">Agregar asistencia</a> 
+<?php echo $this->Html->link('Agregar asistencia', array('action'=>'add'),array('class' => 'btnAdd'));?>
 <br>
 <p></p>
 <table>
@@ -20,4 +20,4 @@
 	</tr>
 <?php endforeach;?>
 </table>
-<a href="../AttendanceTutors" class="btnOpciones">Regresar</a>
+<a href="/" class="btnOpciones">Regresar</a>

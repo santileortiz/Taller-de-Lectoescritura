@@ -1,6 +1,5 @@
 <h2>Listado de sesiones</h2>
 
-<a href="/cakephp/" class="btnOpciones">Regresar</a>
 <table id="schedule">
 	<tr>
 		<th style="border: 0px solid black;">&nbsp;</th>
@@ -34,6 +33,7 @@
 ?>
 </table>
 
+<a style="float:left; clear:both" href="/" class="btnOpciones">Regresar</a>
 <?php 
     $this->Html->script('lessonUI.js', array('inline'=>false));
 ?>

@@ -6,4 +6,4 @@
 	echo $this->Form->end('Guardar asistencia');
 ?>
 
-<a href="../AttendanceTutors" class="btnOpciones">Regresar</a>
+<a href="../" class="btnOpciones">Regresar</a>

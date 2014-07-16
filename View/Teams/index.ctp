@@ -1,5 +1,5 @@
 <h2>Listado de equipos</h2>
-<a href="Teams/add" class="btnAdd">Agregar equipo</a> 
+<?php echo $this->Html->link('Agregar equipo', array('action'=>'add'),array('class' => 'btnAdd'));?>
 <br>
 <p></p>
 <table>
@@ -22,4 +22,4 @@
 	</tr>
 <?php endforeach;?>
 </table>
-<a href="/projects/cake/" class="btnOpciones">Regresar</a>
+<a href="../" class="btnOpciones">Regresar</a>

@@ -1,5 +1,5 @@
 <h2>Listado de asistencias de alumnos</h2>
-<a href="AttendanceStudents/add" class="btnAdd">Agregar asistencia</a> 
+<?php echo $this->Html->link('Agregar asistencia', array('action'=>'add'),array('class' => 'btnAdd'));?>
 <br>
 <p></p>
 <table>
@@ -22,4 +22,4 @@
 	</tr>
 <?php endforeach;?>
 </table>
-<a href="/projects/cake/" class="btnOpciones">Regresar</a>
+<a href="/" class="btnOpciones">Regresar</a>

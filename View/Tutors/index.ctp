@@ -1,5 +1,5 @@
 <h2>Listado de tutores</h2>
-<a href="Tutors/add" class="btnAdd">Agregar tutor</a> 
+<?php echo $this->Html->link('Agregar tutor', array('action'=>'add'),array('class' => 'btnAdd'));?>
 <br>
 <p></p>
 <table>
@@ -30,4 +30,4 @@
 	</tr>
 <?php endforeach;?>
 </table>
-<a href="/projects/cake/" class="btnOpciones">Regresar</a></li>
+<a href="/" class="btnOpciones">Regresar</a></li>

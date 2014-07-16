@@ -12,4 +12,4 @@
 	echo $this->Form->end('Guardar alumno');
 ?>
 
-<a href="../Students">Regresar</a>
+<a href="..">Regresar</a>
