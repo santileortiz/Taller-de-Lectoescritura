@@ -52,7 +52,7 @@ h1 {
 }
 h2 {
 	background:#fff;
-	color: #e32;
+	color: #4397CF;
 	font-family:'Gill Sans','lucida grande', helvetica, arial, sans-serif;
 	font-size: 140%; /*190*/
 }
@@ -919,7 +919,7 @@ a.btnMenu:active {
 }
 #schedule tr td{
     border-radius: 5px;
-    border: 1px solid black;
+    border: 0px solid black;
     text-align: center;
 }
 .empty {
