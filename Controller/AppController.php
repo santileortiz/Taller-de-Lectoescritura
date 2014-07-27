@@ -31,4 +31,20 @@ App::uses('Controller', 'Controller');
  * @link		http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {
+    public $helpers = array('Html', 'Form');
+    public $components = array('Session', 
+        'Auth'=>array(
+            'authenticate'=>array(
+                'Form'=>array( 'passwordHasher')
+            ),
+            'authorize'=>'Controller'
+        ) 
+    );    
+
+    public function isAuthorized($user){
+        if($user['type']=='admin')
+            return true;
+        else
+            return false;
+    }
 }

@@ -13,7 +13,7 @@
 
 <li style="float:left"><a href="Teams/" class="btnMenu">Equipos</a></li>
 
-<li style="float:left"><a href="Users/" class="btnMenu">Usuarios</a></li>
+<li style="float:left"><a href="Logins/" class="btnMenu">Logins</a></li>
 </ul>
 <br>
 <br>

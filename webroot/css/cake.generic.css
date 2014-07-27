@@ -331,10 +331,10 @@ label {
 }
 input, textarea {
 	clear: both;
-	font-size: 140%;
+	font-size: 100%;
 	font-family: "frutiger linotype", "lucida grande", "verdana", sans-serif;
 	padding: 1%;
-	width:98%;
+	width: 100%;
 }
 select {
 	clear: both;
@@ -899,6 +899,7 @@ a.btnMenu {
 	padding:6px 15px;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #1570cd;
+	margin: 5px;
 }
 a.btnMenu:hover {
 	background-color:#1e62d0;
