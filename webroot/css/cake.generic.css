@@ -26,7 +26,7 @@ body {
 	background: #003689; /*#003d4c*/
 	color: #fff;
 	font-family:'lucida grande',verdana,helvetica,arial,sans-serif;
-	font-size:90%;
+	font-size: 90%;
 	margin: 0;
 }
 a {
@@ -72,6 +72,7 @@ ul, li {
 	margin: 0px 0px 0px 0px !important;
 	padding-right: 10px;
 	list-style-type: none;
+	width: inherit;
 }
 p {
 	margin: 0 0 1em 0;
@@ -84,6 +85,7 @@ p {
 
 #header{
 	padding: 10px 10px;
+	overflow: auto;
 }
 #header h1 {
 	line-height:0px;
@@ -114,10 +116,11 @@ p {
 }
 #content{
 	background: #fff;
-	clear: both;
 	color: #333;
 	padding: 10px 20px 40px 20px;
 	overflow: auto;
+	float: right;
+	width: 81%;
 }
 #footer {
 	clear: both;
@@ -141,7 +144,7 @@ div.view {
 }
 div.actions {
 	float:left;
-	width:16%;
+	width: 10%;
 	padding:10px 1.5%;
 }
 div.actions h3 {

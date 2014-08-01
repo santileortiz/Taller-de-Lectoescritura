@@ -9,7 +9,7 @@ class UsersController extends AppController {
 	public function add() {
 		if($this->request->is('post')):
 			if($this->User->save($this->request->data)):
-				$this->Session->setFlash("¡User guardado!", 'default', array('class'=>'custom_success'));
+				$this->Session->setFlash("¡Usuario guardado!", 'default', array('class'=>'custom_success'));
 			endif;
 		endif;
 	}
@@ -45,6 +45,8 @@ class UsersController extends AppController {
                 $tipo = $this->Auth->user('type');
                 if($tipo=='admin'){
                     $this->redirect(array('controller'=>'pages', 'action'=>'adminPanel'));
+                }else if ( $tipo == 'asesor'){
+                    $this->redirect(array('controller'=>'Advisers', 'action'=>'home'));
                 }
             }
         }

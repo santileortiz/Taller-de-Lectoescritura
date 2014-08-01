@@ -1,10 +1,11 @@
 <br>
-<h2 style="font-size:20px">Bienvenido usuario</h2>
+<h2 style="font-size:20px">Bienvenido asesor</h2>
 <p>Seleccione:</p>
 <p></p>
 <ul class="nav">
 <?php
-echo $this->Html->link('Alumnos',array('controller'=>'Students', 'action'=>'index'),
+$this->NavMenu->set();
+echo $this->Html->link('Perfil',array('controller'=>'Advisers', 'action'=>'view', $auth_user['Adviser']['id']),
     array('class'=>'btnMenu'));
 echo $this->Html->link('Tutores',array('controller'=>'Tutors', 'action'=>'index'),
     array('class'=>'btnMenu'));

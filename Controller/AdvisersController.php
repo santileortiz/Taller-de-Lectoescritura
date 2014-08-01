@@ -1,12 +1,47 @@
 <?php
+App::uses('AppController', 'Controller');
+
 class AdvisersController extends AppController {
-	public $helpers = array('Html', 'Form');
-	public $components = array('Session');
-	
+
+    public function beforeFilter(){
+        parent::beforeFilter();
+        
+        $this->helpers['NavMenu'] = array(
+            'items' => array(
+                'Mi Perfil' => array('action' => 'view', $this->Auth->user('Adviser')['id']),
+                'Asesores' => array('action' => 'index'),
+                'Tutores' => array('controller' => 'Tutors', 'action' => 'index'),
+                'Equipos' => array('controller' => 'Teams', 'action' => 'index')
+            )
+        );
+    }	
+
+    public function isAuthorized($user){
+        //si es un asesor:
+        if ( $user['type'] == 'asesor' ){
+            //Solo puede editar su perfil
+            if($this->action=='edit'){
+                $this->Adviser->User;
+                return $this->Adviser->isOwnProfile($this->request->params['pass'][0], $user);
+            }else if(in_array($this->action, array( 'index', 'view', 'home', 'indexTutors'))){
+                //Puede ver la informacion de todos los asesores
+                return true;
+            }
+        }
+        //Si es administrador puede hacer cualquier cosa
+        return parent::isAuthorized($user);
+    }
+
 	public function index() {
 		$params = array('order' => 'name');
-		$this->set('asesores', $this->Adviser->find('all'));
+		$this->set('advisers', $this->Adviser->find('all'));
+		$this->set('users', $this->Adviser->User->find('list'));
+		$this->set('type', $this->Auth->user('type'));
 	}
+
+    public function indexTutors(){
+        debug($this->Adviser->getOwnTutors($this->Auth->user()));
+    }
 	
 	public function add() {
 		if($this->request->is('post')):
@@ -14,6 +49,8 @@ class AdvisersController extends AppController {
 				$this->Session->setFlash("¡Asesor guardado!", 'default', array('class'=>'custom_success'));
 				$this->redirect(array('action' => 'index'));
 			endif;
+        else:
+		$this->set('users', $this->Adviser->User->find('list'));
 		endif;
 	}
 
@@ -22,13 +59,13 @@ class AdvisersController extends AppController {
 		if($this->request->is('get')):
 			$this->request->data = $this->Adviser->read();
 		else: //peticion no es get
-		if($this->Adviser->save($this->request->data)):
-			$this->Session->setFlash('¡Asesor '.$this->request->data['Adviser']['name'].' editado!', 'default', array('class'=>'custom_success'));
-			$this->redirect( array('action' => 'index') );
-		else:
-			$this->Session->setFlash('Error al guardar los cambios...');
-		endif;
-	endif;
+            if($this->Adviser->save($this->request->data)):
+                $this->Session->setFlash('¡Asesor '.$this->request->data['Adviser']['name'].' editado!', 'default', array('class'=>'custom_success'));
+                $this->redirect( array('action' => 'index') );
+            else:
+                $this->Session->setFlash('Error al guardar los cambios...');
+            endif;
+        endif;
 	}
 
 	public function delete($id){
@@ -41,5 +78,14 @@ class AdvisersController extends AppController {
 			endif;
 		endif;
 	}
+
+    public function view($id){
+        $this->Adviser->id = $id;
+        $this->set('adviser', $this->Adviser->read());
+    }
+
+    public function home(){
+        $this->set('auth_user', $this->Auth->user());
+    }
 }
 ?>

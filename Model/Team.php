@@ -11,3 +11,4 @@ class Team extends AppModel {
         )
     );
 }
+?>

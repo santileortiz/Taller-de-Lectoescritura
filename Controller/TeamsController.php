@@ -9,14 +9,9 @@ class TeamsController extends AppController {
 	}
 	
 	public function add() {
-		$this->loadModel('Adviser');
-		$user1 = $this->Adviser->find('list', array('fields' => array('Adviser.id', 'dropdown_name')));
-    	$this->set('comboBoxAdviser',$user1);
+    	$this->set('advisers',$this->Team->Adviser->find('list'));
 
-		$this->loadModel('Student');
-		$user2 = $this->Student->find('list', array('fields' => array('Student.id', 'dropdown_name')));
-		//$user2 = $this->Student->find('list');
-    	$this->set('comboBoxStudent',$user2);
+    	$this->set('students',$this->Team->Student->find('list'));
 
 		if($this->request->is('post')):
 			if($this->Team->save($this->request->data)):
