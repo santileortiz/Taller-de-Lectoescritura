@@ -6,14 +6,6 @@ class AdvisersController extends AppController {
     public function beforeFilter(){
         parent::beforeFilter();
         
-        $this->helpers['NavMenu'] = array(
-            'items' => array(
-                'Mi Perfil' => array('action' => 'view', $this->Auth->user('Adviser')['id']),
-                'Asesores' => array('action' => 'index'),
-                'Tutores' => array('controller' => 'Tutors', 'action' => 'index'),
-                'Equipos' => array('controller' => 'Teams', 'action' => 'index')
-            )
-        );
     }	
 
     public function isAuthorized($user){
@@ -23,7 +15,7 @@ class AdvisersController extends AppController {
             if($this->action=='edit'){
                 $this->Adviser->User;
                 return $this->Adviser->isOwnProfile($this->request->params['pass'][0], $user);
-            }else if(in_array($this->action, array( 'index', 'view', 'home', 'indexTutors'))){
+            }else if(in_array($this->action, array( 'index', 'view', 'home', 'addTutors'))){
                 //Puede ver la informacion de todos los asesores
                 return true;
             }
@@ -39,10 +31,6 @@ class AdvisersController extends AppController {
 		$this->set('type', $this->Auth->user('type'));
 	}
 
-    public function indexTutors(){
-        debug($this->Adviser->getOwnTutors($this->Auth->user()));
-    }
-	
 	public function add() {
 		if($this->request->is('post')):
 			if($this->Adviser->save($this->request->data)):
@@ -53,6 +41,27 @@ class AdvisersController extends AppController {
 		$this->set('users', $this->Adviser->User->find('list'));
 		endif;
 	}
+
+    public function addTutors(){
+        if ( $this->request->is('post') ){
+            $usernames = explode(',', $this->request->data['Form']['usernames']);
+            foreach ($usernames as $k => $username){
+                $without_spaces = preg_replace('/\s+/', '', $username);
+                if ( strpos($username, '@') !== false ){
+                    $parts = explode('@', $without_spaces);
+                    if ( strpos($parts[1], 'itesm') !== false ){
+                        $usernames[$k] = strtoupper($parts[0]);
+                    }else{
+                        $usernames[$k] = $parts[0];
+                    }
+                }
+            }
+            $passwords = $this->Adviser->Tutor->createTutors($usernames, $this->Auth->user('Adviser')['id']);
+            $this->set('users', array_combine($usernames, $passwords));
+            $this->render('htmlPasswords');
+
+        }
+    }
 
 	public function edit($id = null){
 		$this->Adviser->id = $id;

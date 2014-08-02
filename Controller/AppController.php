@@ -49,5 +49,6 @@ class AppController extends Controller {
     }
 
     public function beforeFilter(){
+        $this->set('auth_user', $this->Auth->user());
     }
 }

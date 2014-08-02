@@ -2,7 +2,7 @@
 class Adviser extends AppModel {
 	public $virtualFields = array('dropdown_name' => 'CONCAT(Adviser.name, " ", Adviser.last_name)');
     public $displayField = 'dropdown_name';
-	public $hasMany = 'Team';
+	public $hasMany = array('Team', 'Tutor');
     public $belongsTo = array(
         'User' => array(
             'className'=>'User',
@@ -17,9 +17,9 @@ class Adviser extends AppModel {
     }
 
     public function getOwnTutors($auth_user){
-        debug($auth_user);
+        $this->recursive = 2;
         $auth_adviser = $this->find('first',array('conditions'=>array('Adviser.id'=>$auth_user['Adviser']['id'])));
-        return $auth_adviser;
+        return $auth_adviser['Tutor'];
 
     }
 

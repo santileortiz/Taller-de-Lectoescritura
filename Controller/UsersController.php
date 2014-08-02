@@ -41,6 +41,7 @@ class UsersController extends AppController {
 
     public function login(){
         if($this->request->is('post')){
+            debug($this->Auth->user());
 			if($this->Auth->login()){ //inicia sesion con la informacion POST
                 $tipo = $this->Auth->user('type');
                 if($tipo=='admin'){
