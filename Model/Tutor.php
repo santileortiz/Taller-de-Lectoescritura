@@ -60,6 +60,19 @@ class Tutor extends AppModel {
         }
 
         return $passwd_array;
-        
+    }
+
+    //Recibe un arreglo con los ids de los tutores que seran miembros del equipo
+    public function addTeam($members){
+        $this->Team->create();
+        $this->Team->save();
+        $team_id = $this->Team->id;
+
+        foreach ( $members as $member ){
+            $Tutor = array();
+            $Tutor['id'] = $member;
+            $Tutor['team_id'] = $team_id;
+            $this->save($Tutor);
+        }
     }
 }

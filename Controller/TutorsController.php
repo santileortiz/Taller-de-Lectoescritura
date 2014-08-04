@@ -4,10 +4,11 @@ class TutorsController extends AppController {
 	public $components = array('Session');
 
     public function isAuthorized($user){
+        $this->
         //si es un asesor:
         if ( $user['type'] == 'asesor' ){
             //Solo puede editar su perfil
-            if(in_array($this->action, array( 'index', 'view', 'add', 'delete', 'edit'))){
+            if(in_array($this->action, array( 'assignTeams', 'index', 'view', 'add', 'delete', 'edit'))){
                 //Puede ver la informacion de todos los asesores
                 return true;
             }
@@ -83,5 +84,29 @@ class TutorsController extends AppController {
 			endif;
 		endif;
 	}
+
+    public function assignTeams(){
+        
+        if ( $this->request->is('post') ){
+            $members = $this->request->data['Team'];
+            $this->Tutor->addTeam($members);
+        }
+
+        $params = array(
+            'conditions' => array(
+                'Tutor.adviser_id' => $this->Auth->user('Adviser')['id'],
+                'Tutor.team_id' => 0
+            )
+        );
+    
+        $unassigned_tutors = $this->Tutor->find('all', $params);
+
+        if ( count($unassigned_tutors) != 0 ){
+            $this->set('tutors', $unassigned_tutors);
+        }else{
+            $this->redirect(array('controller' => 'Teams', 'action' => 'index'));
+        }
+
+    }
 }
 ?>

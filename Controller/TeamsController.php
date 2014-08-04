@@ -2,6 +2,19 @@
 class TeamsController extends AppController {
 	public $helpers = array('Html', 'Form');
 	public $components = array('Session');
+
+    public function isAuthorized($user){
+        //si es un asesor:
+        if ( $user['type'] == 'asesor' ){
+            //Solo puede editar su perfil
+            if(in_array($this->action, array('index', 'view', 'add', 'delete', 'edit'))){
+                //Puede ver la informacion de todos los asesores
+                return true;
+            }
+        }
+        //Si es administrador puede hacer cualquier cosa
+        return parent::isAuthorized($user);
+    }
 	
 	public function index() {
 		$params = array('order' => 'adviser_id');
@@ -24,6 +37,9 @@ class TeamsController extends AppController {
 	public function edit($id = null){
 		$this->Team->id = $id;
 		if($this->request->is('get')):
+            $this->loadModel('Student');
+            $students = $this->Student->listUnassigned($id);
+            $this->set('students', $students);
 			$this->request->data = $this->Team->read();
 		else: //peticion no es get
 		if($this->Team->save($this->request->data)):

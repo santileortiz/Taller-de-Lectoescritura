@@ -13,10 +13,10 @@ class NavMenuHelper extends AppHelper {
         $this->menus = array(
             'asesor' => array(
                 'items' => array(
-                    'Mi Perfil' => array('action' => 'view', $this->auth_user['Adviser']['id']),
-                    'Asesores' => array('action' => 'index'),
+                    'Mi Perfil' => array('controller' => 'Advisers', 'action' => 'view', $this->auth_user['Adviser']['id']),
+                    'Asesores' => array('controller' => 'Advisers', 'action' => 'index'),
                     'Tutores' => array('controller' => 'Tutors', 'action' => 'index'),
-                    'Equipos' => array('controller' => 'Teams', 'action' => 'index')
+                    'Equipos' => array('controller' => 'Tutors', 'action' => 'assignTeams')
                 )
             )
         );
@@ -32,7 +32,7 @@ class NavMenuHelper extends AppHelper {
                 if ( $k != $disable_item)
                     echo $this->Html->link($k, $item);
                 else
-                    echo $this->Html->link($k, array('action'=>'home'), array('class'=> 'disabled'));
+                    echo $this->Html->link($k, $item, array('class'=> 'disabled'));
                 echo '</li>';
             }
             echo '</ul>';

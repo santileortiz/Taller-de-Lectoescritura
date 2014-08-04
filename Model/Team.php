@@ -10,5 +10,10 @@ class Team extends AppModel {
             'foreignKey' => 'student_id'
         )
     );
+
+    public $hasMany = array('Tutor');
+
+    public $hasAndBelongsToMany = array('Lesson');
+
 }
 ?>

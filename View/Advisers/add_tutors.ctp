@@ -4,7 +4,7 @@
     de los tutores que desea agregar al sistema separados por coma.
 </p>
 <?php
-    $this->NavMenu->set('Tutores');
+    $this->NavMenu->set('Equipos');
 	echo $this->Form->create('Form');
 	echo $this->Form->input('usernames');
 	echo $this->Form->end('Guardar tutores');

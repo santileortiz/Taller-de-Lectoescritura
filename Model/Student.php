@@ -10,13 +10,25 @@ class Student extends AppModel {
 			'foreignKey' => 'student_id'
 		)
 	);
-	public $hasAndBelongsToMany = array(
-        'Lesson' =>
-            array(
-                'className' => 'Lesson',
-                'joinTable' => 'lessons_students',
-                'foreignKey' => 'student_id',
-                'associationForeignKey' => 'lesson_id'
+
+    public function listUnassigned($self_id = null){
+
+        $params = array(
+            'conditions' => array(
+                'Team.student_id !=' => 0
             )
-    );
+        );
+
+        $assigned_teams = $this->Team->find('all', $params);
+        $students = $this->find('all');
+
+        $student_list = array();
+
+        foreach ( $students as $student ) {
+            if ( $student['Team']['id'] == null || $student['Team']['id'] == $self_id )
+                $student_list[$student['Student']['id']] = $student['Student'][$this->displayField];
+        }
+
+        return $student_list;
+    }
 }

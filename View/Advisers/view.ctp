@@ -21,3 +21,7 @@
         &nbsp;
     </dd>
 </dl>
+<br>
+<?php
+    echo $this->Html->link('Editar', array('controller' => 'Advisers', 'action' => 'edit', $auth_user['Adviser']['id']), array('class'=>'btnAdd'));
+?>
