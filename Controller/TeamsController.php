@@ -12,6 +12,11 @@ class TeamsController extends AppController {
                 return true;
             }
         }
+        else if ( $user['type'] == 'tutor' ){
+            if(in_array($this->action, array('view'))){
+                return true;
+            }
+        }
         //Si es administrador puede hacer cualquier cosa
         return parent::isAuthorized($user);
     }
@@ -50,6 +55,13 @@ class TeamsController extends AppController {
 		endif;
 	endif;
 	}
+
+    public function view ( $id = null ){
+        if ( $this->Auth->user('type') == 'tutor' )
+            $id = $this->Auth->user('Tutor')['team_id'];
+        $this->Team->id = $id;
+        $this->set('team', $this->Team->read());
+    }
 
 	public function delete($id){
 		if($this->request->is('get')):

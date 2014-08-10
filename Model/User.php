@@ -14,6 +14,12 @@ class User  extends AppModel {
                 'rule' => array('notEmpty'),
                 'message' => 'Se necesita una clave'
         ),
+        'repass' => array(
+            'equaltofield' => array(
+                'rule' => array('equaltofield','password'),
+                'message' => 'Las claves no coinciden',
+            )
+        ),
         'type' => array(
             'valid' => array(
                 'rule' => array('inList', array('admin', 'asesor', 'tutor', 'munira')),
@@ -22,6 +28,17 @@ class User  extends AppModel {
             )
         )
     );
+
+    function equaltofield($check,$otherfield)
+    {
+        //get name of field
+        $fname = '';
+        foreach ($check as $key => $value){
+            $fname = $key;
+            break;
+        }
+        return $this->data[$this->name][$otherfield] === $this->data[$this->name][$fname];
+    }
 
     public function authenticate($formData){
         $user = $this->find('first', array(

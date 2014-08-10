@@ -5,5 +5,3 @@
 	echo $this->Form->input('password', array('label' => 'Clave', 'type'=> 'password'));
 	echo $this->Form->end('Iniciar Sesion');
 ?>
-
-<a href="..">Regresar</a>

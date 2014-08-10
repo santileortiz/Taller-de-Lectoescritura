@@ -1,6 +1,21 @@
 <?php
 class UsersController extends AppController {
 
+    public function isAuthorized($user){
+        //si es un asesor:
+        if ( $user['type'] == 'asesor' ){
+            if(in_array($this->action, array('changePassword'))){
+                return true;
+            }
+        }
+        else if ( $user['type'] == 'tutor' ){
+            if(in_array($this->action, array('changePassword'))){
+                return true;
+            }
+        }
+        //Si es administrador puede hacer cualquier cosa
+        return parent::isAuthorized($user);
+    }
 
     public function index() {
         $this->set('users', $this->User->find('all'));
@@ -41,14 +56,18 @@ class UsersController extends AppController {
 
     public function login(){
         if($this->request->is('post')){
-            debug($this->Auth->user());
 			if($this->Auth->login()){ //inicia sesion con la informacion POST
                 $tipo = $this->Auth->user('type');
                 if($tipo=='admin'){
                     $this->redirect(array('controller'=>'pages', 'action'=>'adminPanel'));
                 }else if ( $tipo == 'asesor'){
                     $this->redirect(array('controller'=>'Advisers', 'action'=>'home'));
+                }else if ( $tipo == 'tutor'){
+                    $this->redirect(array('controller'=>'Tutors', 'action'=>'home'));
                 }
+
+            } else {
+                $this->Session->setFlash('Usuario/Clave incorrecto');
             }
         }
     }
@@ -56,6 +75,23 @@ class UsersController extends AppController {
     public function logout(){
         $this->Auth->logout();
         $this->redirect('login');
+    }
+
+    public function changePassword($id = null){
+        if ( $this->Auth->user('type') != 'admin' )
+            $id = $this->Auth->user('id');
+
+        $this->User->id = $id;
+
+        if ( $this->request->is('post') ){
+            if ( $this->User->save($this->request->data) ){
+                $this->Session->setFlash("Clave cambiada", 'default', array('class'=>'custom_success'));
+                if ( $this->Auth->user('type') == 'asesor' )
+                    $this->redirect(array('controller'=>'Advisers', 'action' => 'view'));
+                else if ( $this->Auth->user('type') == 'tutor' )
+                    $this->redirect(array('controller'=>'Tutors', 'action' => 'view', $this->Auth->user('Adviser')['id']));
+            }
+        }
     }
 }
 ?>

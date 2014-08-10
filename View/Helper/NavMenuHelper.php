@@ -13,10 +13,20 @@ class NavMenuHelper extends AppHelper {
         $this->menus = array(
             'asesor' => array(
                 'items' => array(
-                    'Mi Perfil' => array('controller' => 'Advisers', 'action' => 'view', $this->auth_user['Adviser']['id']),
+                    'Mi Perfil' => array('controller' => 'Advisers', 'action' => 'view'),
                     'Asesores' => array('controller' => 'Advisers', 'action' => 'index'),
                     'Tutores' => array('controller' => 'Tutors', 'action' => 'index'),
-                    'Equipos' => array('controller' => 'Tutors', 'action' => 'assignTeams')
+                    'Equipos' => array('controller' => 'Tutors', 'action' => 'assignTeams'),
+                    'Salir' => array('controller' => 'Users', 'action' => 'logout')
+                )
+            ),
+            'tutor' => array(
+                'items' => array(
+                    'Mi Perfil' => array('controller' => 'Tutors', 'action' => 'view'),
+                    'Asesores' => array('controller' => 'Advisers', 'action' => 'index'),
+                    'Tutores' => array('controller' => 'Tutors', 'action' => 'index'),
+                    'Equipos' => array('controller' => 'Tutors', 'action' => 'assignTeams'),
+                    'Salir' => array('controller' => 'Users', 'action' => 'logout')
                 )
             )
         );

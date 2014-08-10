@@ -4,7 +4,6 @@ class TutorsController extends AppController {
 	public $components = array('Session');
 
     public function isAuthorized($user){
-        $this->
         //si es un asesor:
         if ( $user['type'] == 'asesor' ){
             //Solo puede editar su perfil
@@ -12,10 +11,15 @@ class TutorsController extends AppController {
                 //Puede ver la informacion de todos los asesores
                 return true;
             }
+        } else if ( $user['type'] == 'tutor' ) {
+            if(in_array($this->action, array('home', 'view', 'edit'))){
+                return true;
+            }
         }
         //Si es administrador puede hacer cualquier cosa
         return parent::isAuthorized($user);
     }
+
 	public function index() {
         if ( $this->Auth->user('type') == 'asesor'){
             $params = array(
@@ -59,7 +63,9 @@ class TutorsController extends AppController {
     }
 
 	public function edit($id = null){
-		$this->Tutor->id = $id;
+        if ( $this->Auth->user('type') == 'tutor' )
+            $id = $this->Auth->user('Tutor')['id'];
+        $this->Tutor->id = $id;
 		if($this->request->is('get')){
             $this->set('advisers',$this->Tutor->Adviser->find('list'));
             $this->set('teams',$this->Tutor->Team->find('list'));
@@ -85,6 +91,13 @@ class TutorsController extends AppController {
 		endif;
 	}
 
+    public function view($id = null){
+        if ( $id == null )
+            $id = $this->Auth->user('Tutor')['id'];
+        $this->Tutor->id = $id;
+        $this->set('tutor', $this->Tutor->read());
+    }
+
     public function assignTeams(){
         
         if ( $this->request->is('post') ){
@@ -107,6 +120,9 @@ class TutorsController extends AppController {
             $this->redirect(array('controller' => 'Teams', 'action' => 'index'));
         }
 
+    }
+
+    public function home() {
     }
 }
 ?>

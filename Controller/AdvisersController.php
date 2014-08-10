@@ -88,13 +88,14 @@ class AdvisersController extends AppController {
 		endif;
 	}
 
-    public function view($id){
+    public function view($id = null){
+        if ( $id == null )
+            $id = $this->Auth->user('Adviser')['id'];
         $this->Adviser->id = $id;
         $this->set('adviser', $this->Adviser->read());
     }
 
     public function home(){
-        $this->set('auth_user', $this->Auth->user());
     }
 }
 ?>

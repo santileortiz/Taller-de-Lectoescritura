@@ -38,11 +38,12 @@ class AppController extends Controller {
                 'Form'=>array( 'passwordHasher')
             ),
             'authorize'=>'Controller'
+            //'unauthorizedRedirect' => array('controller' => 'Users', 'action' => 'login')
         ) 
     );    
 
     public function isAuthorized($user){
-        if($user['type']=='admin')
+        if($user['type']=='admin' || in_array($this->action, array('login', 'logout')))
             return true;
         else
             return false;
